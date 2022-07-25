@@ -1,0 +1,19 @@
+{
+  "name": "rpg-game---jest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Boywondr84/RPG-Game---Jest.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Boywondr84/RPG-Game---Jest/issues"
+  },
+  "homepage": "https://github.com/Boywondr84/RPG-Game---Jest#readme"
+}
