@@ -1,46 +1,33 @@
-const Enemy = require('../lib/Enemy');
-const Potion = require('../lib/Potion');
-jest.mock('../lib/Potion');
+const Enemy = require('../lib/Enemy.js');
+const Potion = require('../lib/Potion.js');
+jest.mock('../lib/Potion.js');
 
 test('creates an enemy object', () => {
-    const enemy = new Enemy('Dale', 'club');
+    const enemy = new Enemy('goblin', 'club');
 
-    expect(enemy.name).toBe('Dale');
+    expect(enemy.name).toBe('goblin');
     expect(enemy.weapon).toBe('club');
     expect(enemy.health).toEqual(expect.any(Number));
     expect(enemy.strength).toEqual(expect.any(Number));
     expect(enemy.agility).toEqual(expect.any(Number));
-
-    expect(enemy.inventory).toEqual(
-        expect.arrayContaining([expect.any(Object)])
-    );
-});
-
-test('gets enemy stats as an object', () => {
-    const enemy = new Enemy('Dale');
-
-    expect(enemy.getStats()).toHaveProperty('potions');
-    expect(enemy.getStats()).toHaveProperty('health');
-    expect(enemy.getStats()).toHaveProperty('strength');
-    expect(enemy.getStats()).toHaveProperty('agility');
-});
-
-test('gets inventory from enemy or returns false', () => {
-    const enemy = new Enemy('Dale', 'club');
-
-    expect(enemy.getInventory()).toEqual(expect.any(Array));
-    enemy.inventory = [];
-    expect(enemy.getInventory()).toEqual(false);
+    expect(enemy.potion).toEqual(expect.any(Object));
 });
 
 test('gets enemy health value', () => {
-    const enemy = new Enemy('Dave', 'club');
+    const enemy = new Enemy('goblin', 'club');
 
     expect(enemy.getHealth()).toEqual(expect.stringContaining(enemy.health.toString()));
 });
 
+test('get enemy description', () => {
+    const enemy = new Enemy('goblin', 'club');
+
+    expect(enemy.getDescription()).toEqual(expect.stringContaining('goblin'));
+    expect(enemy.getDescription()).toEqual(expect.stringContaining('club'));
+});
+
 test('check if enemy is alive', () => {
-    const enemy = new Enemy('Dale', 'club');
+    const enemy = new Enemy('goblin', 'club');
 
     expect(enemy.isAlive()).toBeTruthy();
 
@@ -49,27 +36,23 @@ test('check if enemy is alive', () => {
     expect(enemy.isAlive()).toBeFalsy();
 });
 
-test('check if enemy health reduced', () => {
-    const enemy = new Enemy('Dale', 'club');
-    const oldHealth = enemy.health;
-
-    enemy.reduceHealth(5);
-    expect(enemy.health).toBe(oldHealth - 5);
-    enemy.reduceHealth(99999);
-    expect(enemy.health).toBe(0);
-});
-
 test('get enemy attack value', () => {
-    const enemy = new Enemy('Dale', 'club');
+    const enemy = new Enemy('goblin', 'club');
     enemy.strength = 10;
 
     expect(enemy.getAttackValue()).toBeGreaterThanOrEqual(5);
     expect(enemy.getAttackValue()).toBeLessThanOrEqual(15);
 });
 
-test('get enemy description', () => {
-    const enemy = new Enemy('Dale', 'club');
+test('check if enemy health reduced', () => {
+    const enemy = new Enemy('goblin', 'club');
+    const oldHealth = enemy.health;
 
-    expect(enemy.getDescription()).toEqual(expect.stringContaining('Dale'));
-    expect(enemy.getDescription()).toEqual(expect.stringContaining('club'));
+    enemy.reduceHealth(5);
+    
+    expect(enemy.health).toBe(oldHealth - 5);
+    
+    enemy.reduceHealth(99999);
+    
+    expect(enemy.health).toBe(0);
 });
